@@ -10,13 +10,17 @@
 #
 # Copyright 2014 Justin Downing
 #
-class awscli::deps {
+class awscli::deps (
+  $manage_epel = true,
+) {
   case $::osfamily {
     'Debian': {
       include awscli::deps::debian
     }
     'RedHat': {
-      include awscli::deps::redhat
+      class{'awscli::deps::redhat':
+        manage_epel => $awscli::deps::manage_epel,
+      }
     }
     'Darwin': {
       include awscli::deps::osx

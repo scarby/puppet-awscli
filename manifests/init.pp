@@ -22,9 +22,12 @@
 # Copyright 2014 Justin Downing
 #
 class awscli (
-  $version = 'present'
+  $version      = 'present',
+  $manage_epel = true
 ) {
-  include awscli::deps
+  class{ 'awscli::deps':
+    manage_epel => $awscli::manage_epel
+  }
 
   package { 'awscli':
     ensure   => $version,
