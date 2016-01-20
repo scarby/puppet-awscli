@@ -15,15 +15,16 @@ class awscli::deps (
 ) {
   case $::osfamily {
     'Debian': {
-      include awscli::deps::debian
+      contain awscli::deps::debian
     }
     'RedHat': {
       class{'awscli::deps::redhat':
         manage_epel => $awscli::deps::manage_epel,
       }
+      contain awscli::deps::redhat
     }
     'Darwin': {
-      include awscli::deps::osx
+      contain awscli::deps::osx
     }
     default:  { fail("The awscli module does not support ${::osfamily}") }
   }
